@@ -1,0 +1,155 @@
+#include <iostream>
+using namespace std;
+
+void print(int a[], int &sol){
+  cout<<"Solution #:"<< sol++<<":";
+  for(int i=0;i<8;i++){
+    cout<<a[i];
+  }
+  cout<<endl;
+  for(int r=0; r<8;r++){
+    for(int c=0;c<8;c++){
+      if (a[c]==r)
+        cout<<"1 ";
+      else 
+        cout<<"0 ";
+    } cout<<endl;
+  }
+ 
+   int i,j,k,l;
+  typedef char box[5][7];
+  box bb,wb,*board[8][8], wq,bq;
+
+  // fill the boxes/queens
+
+  for(int i=0;i<5;i++){
+    for(int j=0;j<7;j++){
+      wb[i][j]=' ';
+      wq[i][j]=' ';
+      bb[i][j]='#';
+      bq[i][j]='#';
+    }
+  }
+
+  //fill the board
+  for(int i=0;i<8;i++){
+    for(int j=0;j<8;j++){
+      if((i+j)%2==0) board[i][j]=&wb;
+      else board[i][j]=&bb;
+    }
+  }
+
+// 11 cases to modify queens
+ // modifcation for white queen
+  wq[1][1]='#'; 
+  wq[2][1]='#';
+  wq[3][1]='#';
+  wq[1][3]='#';
+  wq[2][3]='#';
+  wq[3][3]='#';
+  wq[1][5]='#';
+  wq[2][5]='#';
+  wq[3][5]='#';
+  wq[3][2]='#';
+  wq[3][4]='#';
+  
+  // modification for black queen
+  bq[1][1]=' ';
+  bq[2][1]=' ';
+  bq[3][1]=' ';
+  bq[1][3]=' ';
+  bq[2][3]=' ';
+  bq[3][3]=' ';
+  bq[1][5]=' ';
+  bq[2][5]=' ';
+  bq[3][5]=' ';
+  bq[3][2]=' ';
+  bq[3][4]=' ';
+
+
+/*for(int i=0;i<5;i++){
+    for(int j=0;j<7;j++){
+    cout<<wq[i][j];
+    }
+    cout<<endl;
+}*/
+
+  // modify board to put the queens
+  
+ for(int i=0;i<8;i++){
+    for(int j=0;j<8;j++){
+    if((a[i]+i)%2 ==0)
+      board[a[i]][i]=&wq;
+    else
+      board[a[i]][i]=&bq;
+  }
+ }
+
+ 
+ 
+ 
+  // print out board
+
+ //upper boarder
+  cout<<"   ";
+  for(int i=0;i<7*8;i++)
+    cout<<'-';
+cout<< endl;
+
+  //board
+  for(int i=0;i<8;i++)
+    for(int k=0;k<5;k++)
+      { cout<<"   "<<"|"; // left boarder
+        for(int j=0;j<8;j++)
+          for(int l=0;l<7;l++)
+            cout<<(*board[i][j])[k][l];
+        cout<<'|'<<endl; // new line
+      }
+
+
+ // lower board
+   cout<<"   ";
+  for(int i=0;i<7*8;i++)
+    cout<<'_';
+cout<< endl;
+  
+  
+  
+  
+  
+ 
+}
+bool check(int ar[], int col){
+  for(int i=0; i<col;i++){
+    if(ar[col]==ar[i] || abs(ar[col]-ar[i]) ==col-i) return false;
+    
+    }
+  return true;
+}
+
+
+int main() {
+
+int q[8],c=0,s=1;
+q[0]=0; 
+   c++;
+while(c>-1){
+  if(c==8) {
+    print(q,s);
+    c--;
+    }
+   else q[c]=-1;
+  while(c>=0 && c<8){
+    q[c]++;
+    if(q[c]==8) c--;
+    else  
+      if (check(q,c)){
+     c++;
+      break;
+    }
+  }
+  
+}  
+
+  return 0;
+}
